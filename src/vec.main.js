@@ -126,6 +126,7 @@ const polute = function () {
   window.vSub = vSub;
   window.vNorm = vNorm;
   window.vScale = vScale;
+  window.vMag = vMag;
   window.vTransform = vTransform;
   window.vRotate = vRotate;
   window.vRotatePointAround = vRotatePointAround;
@@ -141,6 +142,7 @@ window.vec = {
   add: vAdd,
   sub: vSub,
   norm: vNorm,
+  mag: vMag,
   scale: vScale,
   transform: vTransform,
   rotate: vRotate,
@@ -157,6 +159,7 @@ window.vec = {
   export { vAdd as add };
   export { vSub as sub };
   export { vNorm as norm };
+  export { vMag as mag };
   export { vScale as scale };
   export { vTransform as transform };
   export { vRotate as rotate };
