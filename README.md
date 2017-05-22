@@ -2,6 +2,18 @@
 
 Tiny linear algebra library specifically for 2d
 
+## Installation
+
+`npm install --save vec-la`
+
+and import or require as needed. If you need to use a standalone windowed version in a script tag:
+
+`gulp`
+
+and
+
+`<script src="node_modules/vec-la/dist/vec.window.js"></script>`
+
 ## Features
 
 - Immutable functions
