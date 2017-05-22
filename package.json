@@ -1,0 +1,25 @@
+{
+  "name": "vec",
+  "version": "1.0.0",
+  "description": "A tiny 2d linear algebra library",
+  "main": "src/vec.export.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/francisrstokes/vec.git"
+  },
+  "author": "Francis Stokes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/francisrstokes/vec/issues"
+  },
+  "homepage": "https://github.com/francisrstokes/vec#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-replace": "^0.5.4",
+    "gulp-strip-code": "^0.1.4"
+  }
+}
