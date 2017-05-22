@@ -1,8 +1,8 @@
 {
-  "name": "vec",
+  "name": "vec-la",
   "version": "1.0.0",
   "description": "A tiny 2d linear algebra library",
-  "main": "src/vec.export.js",
+  "main": "dist/vec.module.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,9 +17,11 @@
   },
   "homepage": "https://github.com/francisrstokes/vec#readme",
   "devDependencies": {
+    "babel-preset-es2015": "^6.24.1",
     "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
     "gulp-browserify": "^0.5.1",
-    "gulp-replace": "^0.5.4",
+    "gulp-rename": "^1.2.2",
     "gulp-strip-code": "^0.1.4"
   }
 }

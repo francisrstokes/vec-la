@@ -4,7 +4,7 @@
  * @param {Vector} v2
  * @returns {Vector}
  */
-var vAdd = function (v, v2) {
+const vAdd = function (v, v2) {
   return [v[0]+v2[0], v[1]+v2[1]];
 };
 
@@ -14,7 +14,7 @@ var vAdd = function (v, v2) {
  * @param {Vector} v2
  * @returns {Vector}
  */
-var vSub = function (v, v2) {
+const vSub = function (v, v2) {
   return [v[0]-v2[0], v[1]-v2[1]];
 };
 
@@ -23,7 +23,7 @@ var vSub = function (v, v2) {
  * @param {Vector} v
  * @returns {Number}
  */
-var vMag = function (v) {
+const vMag = function (v) {
   return Math.sqrt(v[0]*v[0]+v[1]*v[1]);
 };
 
@@ -32,8 +32,8 @@ var vMag = function (v) {
  * @param {Vector} v
  * @returns {Vector}
  */
-var vNorm = function (v) {
-  var mag = vMag(v);
+const vNorm = function (v) {
+  const mag = vMag(v);
   return [
     v[0] / mag,
     v[1] / mag
@@ -46,7 +46,7 @@ var vNorm = function (v) {
  * @param {Number} sc
  * @returns {Vector}
  */
-var vScale = function (v, sc) {
+const vScale = function (v, sc) {
   return [v[0]*sc, v[1]*sc];
 };
 
@@ -56,7 +56,7 @@ var vScale = function (v, sc) {
  * @param {Matrix} m
  * @returns {Vector}
  */
-var vTransform = function (v, m) {
+const vTransform = function (v, m) {
   return [v[0] * (m[0] + m[1]), v[1] * (m[2] + m[3])];
 };
 
@@ -66,7 +66,7 @@ var vTransform = function (v, m) {
  * @param {Number} a
  * @returns {Vector}
  */
-var vRotate = function (v, a) {
+const vRotate = function (v, a) {
   return [
     v[0] * Math.cos(a) - v[1] * Math.sin(a),
     v[0] * Math.sin(a) + v[1] * Math.cos(a)
@@ -80,8 +80,8 @@ var vRotate = function (v, a) {
  * @param {Number} a
  * @returns {Vector}
  */
-var vRotatePointAround = function (v, cp, a) {
-  var v2 = vSub(v, cp);
+const vRotatePointAround = function (v, cp, a) {
+  const v2 = vSub(v, cp);
   return this.add(cp, [
     v2[0] * Math.cos(a) - v2[1] * Math.sin(a),
     v2[0] * Math.sin(a) + v2[1] * Math.cos(a)
@@ -94,7 +94,7 @@ var vRotatePointAround = function (v, cp, a) {
  * @param {Vector} v2
  * @returns {Vector}
  */
-var vMidpoint = function (v, v2) {
+const vMidpoint = function (v, v2) {
   return vScale(vAdd(v, v2), 0.5);
 };
 
@@ -104,7 +104,7 @@ var vMidpoint = function (v, v2) {
  * @param {Vector} v2
  * @returns {Number}
  */
-var vDot = function (v, v2) {
+const vDot = function (v, v2) {
   return v[0]*v2[0] + v[1]*v2[1];
 };
 
@@ -113,7 +113,7 @@ var vDot = function (v, v2) {
  * @param {Matrix} m
  * @returns {Number}
  */
-var vDet = function (m) {
+const vDet = function (m) {
   return m[0]*m[3] - m[1]*m[2];
 };
 
@@ -121,7 +121,7 @@ var vDet = function (m) {
 /**
  * Polutes the global scope with unnamespaced functions
  */
-var polute = function () {
+const polute = function () {
   window.vAdd = vAdd;
   window.vSub = vSub;
   window.vNorm = vNorm;
@@ -154,16 +154,14 @@ window.vec = {
 /* end window exports */
 
 /* start exports */
-module.exports = {
-  add: vAdd,
-  sub: vSub,
-  norm: vNorm,
-  scale: vScale,
-  transform: vTransform,
-  rotate: vRotate,
-  rotatePointAround: vRotatePointAround,
-  midpoint: vMidpoint,
-  dot: vDot,
-  det: vDet
-};
+  export { vAdd as add };
+  export { vSub as sub };
+  export { vNorm as norm };
+  export { vScale as scale };
+  export { vTransform as transform };
+  export { vRotate as rotate };
+  export { vRotatePointAround as rotatePointAround };
+  export { vMidpoint as midpoint };
+  export { vDot as dot };
+  export { vDet as det };
 /* end exports */
