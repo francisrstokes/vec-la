@@ -108,7 +108,7 @@ const m2 = [
   Math.cos(Math.PI/2), -Math.sin(Math.PI/2),
   Math.sin(Math.PI/2), Math.cos(Math.PI/2)
 ];
-const m3 = vec.composeTransform(m, m2);
+const m3 = vec.composeTransform(m2, m);
 
 const v2 = vec.transform(v1, m1); // is the same as
 const v3 = vec.transform(vec.transform(v1, m), m2);
