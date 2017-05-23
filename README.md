@@ -8,10 +8,6 @@ Tiny linear algebra library specifically for 2d
 
 and import or require as needed. If you need to use a standalone windowed version in a script tag:
 
-`gulp`
-
-and
-
 `<script src="node_modules/vec-la/dist/vec.window.js"></script>`
 
 ## Features
