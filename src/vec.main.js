@@ -117,6 +117,19 @@ const vDet = function (m) {
   return m[0]*m[3] - m[1]*m[2];
 };
 
+/**
+ * Compose two tranformations
+ * @param {Matrix} m
+ * @param {Matrix} m2
+ * @returns {Matrix}
+ */
+const vComposeTransform = function (m, m2) {
+  return [
+    m[0]*m2[0] + m[1]*m2[2], m[0]*m2[1] + m[1]*m2[3],
+    m[2]*m2[0] + m[3]*m2[2], m[3]*m2[1] + m[3]*m1[3]
+  ];
+}
+
 /* start window exports */
 /**
  * Polutes the global scope with unnamespaced functions
@@ -128,11 +141,12 @@ const polute = function () {
   window.vScale = vScale;
   window.vMag = vMag;
   window.vTransform = vTransform;
+  window.vComposeTransform = vComposeTransform;
   window.vRotate = vRotate;
   window.vRotatePointAround = vRotatePointAround;
   window.vMidpoint = vMidpoint;
   window.vDot = vDot;
-  window.vDet = vDet;  
+  window.vDet = vDet;
 }
 
 /**
@@ -145,6 +159,7 @@ window.vec = {
   mag: vMag,
   scale: vScale,
   transform: vTransform,
+  composeTransform: vComposeTransform,
   rotate: vRotate,
   rotatePointAround: vRotatePointAround,
   midpoint: vMidpoint,
@@ -162,6 +177,7 @@ window.vec = {
   export { vMag as mag };
   export { vScale as scale };
   export { vTransform as transform };
+  export { vComposeTransform as composeTransform };
   export { vRotate as rotate };
   export { vRotatePointAround as rotatePointAround };
   export { vMidpoint as midpoint };
