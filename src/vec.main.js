@@ -4,9 +4,7 @@
  * @param {Vector} v2
  * @returns {Vector}
  */
-const vAdd = function (v, v2) {
-  return [v[0]+v2[0], v[1]+v2[1]];
-};
+const vAdd = (v, v2) => [v[0]+v2[0], v[1]+v2[1]];
 
 /**
  * Subtracts one vector from another
@@ -14,25 +12,21 @@ const vAdd = function (v, v2) {
  * @param {Vector} v2
  * @returns {Vector}
  */
-const vSub = function (v, v2) {
-  return [v[0]-v2[0], v[1]-v2[1]];
-};
+const vSub = (v, v2) => [v[0]-v2[0], v[1]-v2[1]];
 
 /**
  * Gets the magnitude of a vector
  * @param {Vector} v
  * @returns {Number}
  */
-const vMag = function (v) {
-  return Math.sqrt(v[0]*v[0]+v[1]*v[1]);
-};
+const vMag = (v) => Math.sqrt(v[0]*v[0]+v[1]*v[1]);
 
 /**
  * Gets a normalised vector 
  * @param {Vector} v
  * @returns {Vector}
  */
-const vNorm = function (v) {
+const vNorm = (v) => {
   const mag = vMag(v);
   return [
     v[0] / mag,
@@ -46,9 +40,23 @@ const vNorm = function (v) {
  * @param {Number} sc
  * @returns {Vector}
  */
-const vScale = function (v, sc) {
-  return [v[0]*sc, v[1]*sc];
-};
+const vScale = (v, sc) => [v[0]*sc, v[1]*sc];
+
+/**
+ * Creates an 2x3 Matrix
+ * @param {Number} a
+ * @param {Number} b
+ * @param {Number} c
+ * @param {Number} d
+ * @param {Number} tx
+ * @param {Number} ty
+ * @returns {Matrix}
+ */
+const vCreateMatrix = (a=1, b=0, c=0, d=1, tx=0, ty=0) =>[
+  a, b, tx, 
+  c, d, ty, 
+  0, 0, 1
+];
 
 /**
  * Applys a matrix transformation to a vector
@@ -56,9 +64,22 @@ const vScale = function (v, sc) {
  * @param {Matrix} m
  * @returns {Vector}
  */
-const vTransform = function (v, m) {
-  return [v[0] * (m[0] + m[1]), v[1] * (m[2] + m[3])];
-};
+const vTransform = (v, m) => [
+  v[0]*m[0] + v[1]*m[3] + m[2],
+  v[0]*m[1] + v[1]*m[4] + m[5]
+];
+
+/**
+ * Compose two tranformations
+ * @param {Matrix} m
+ * @param {Matrix} m2
+ * @returns {Matrix}
+ */
+const vComposeTransform = (m, m2) => [
+  m[0]*m2[0] + m[1]*m2[3] + m[2]*m2[6],   m[0]*m2[1] + m[1]*m2[4] + m[2]*m2[7],    m[0]*m2[2] + m[1]*m2[5] + m[2]*m2[8],
+  m[3]*m2[0] + m[4]*m2[3] + m[5]*m2[6],   m[3]*m2[1] + m[4]*m2[4] + m[5]*m2[7],    m[3]*m2[2] + m[4]*m2[5] + m[5]*m2[8],
+  m[6]*m2[0] + m[7]*m2[3] + m[8]*m2[6],   m[6]*m2[1] + m[7]*m2[4] + m[8]*m2[7],    m[6]*m2[2] + m[7]*m2[5] + m[8]*m2[8]
+];
 
 /**
  * Rotates a vector around the origin. Shorthand for a rotation matrix
@@ -66,12 +87,10 @@ const vTransform = function (v, m) {
  * @param {Number} a
  * @returns {Vector}
  */
-const vRotate = function (v, a) {
-  return [
-    v[0] * Math.cos(a) - v[1] * Math.sin(a),
-    v[0] * Math.sin(a) + v[1] * Math.cos(a)
-  ];
-};
+const vRotate = (v, a) => [
+  v[0] * Math.cos(a) - v[1] * Math.sin(a),
+  v[0] * Math.sin(a) + v[1] * Math.cos(a)
+];
 
 /**
  * Rotates a vector around a given point.
@@ -80,7 +99,7 @@ const vRotate = function (v, a) {
  * @param {Number} a
  * @returns {Vector}
  */
-const vRotatePointAround = function (v, cp, a) {
+const vRotatePointAround = (v, cp, a) => {
   const v2 = vSub(v, cp);
   return this.add(cp, [
     v2[0] * Math.cos(a) - v2[1] * Math.sin(a),
@@ -94,9 +113,7 @@ const vRotatePointAround = function (v, cp, a) {
  * @param {Vector} v2
  * @returns {Vector}
  */
-const vMidpoint = function (v, v2) {
-  return vScale(vAdd(v, v2), 0.5);
-};
+const vMidpoint = (v, v2) => vScale(vAdd(v, v2), 0.5);
 
 /**
  * Dot product of two vectors
@@ -104,31 +121,16 @@ const vMidpoint = function (v, v2) {
  * @param {Vector} v2
  * @returns {Number}
  */
-const vDot = function (v, v2) {
-  return v[0]*v2[0] + v[1]*v2[1];
-};
+const vDot = (v, v2) => v[0]*v2[0] + v[1]*v2[1];
 
-/**
+/** 
  * Determinate of a matrix
  * @param {Matrix} m
  * @returns {Number}
  */
-const vDet = function (m) {
-  return m[0]*m[3] - m[1]*m[2];
-};
+const vDet = (m) => m[0]*m[4] - m[1]*m[3];
 
-/**
- * Compose two tranformations
- * @param {Matrix} m
- * @param {Matrix} m2
- * @returns {Matrix}
- */
-const vComposeTransform = function (m, m2) {
-  return [
-    m[0]*m2[0] + m[1]*m2[2], m[0]*m2[1] + m[1]*m2[3],
-    m[2]*m2[0] + m[3]*m2[2], m[2]*m2[1] + m[3]*m2[3]
-  ];
-}
+
 /* start window exports */
 /**
  * Polutes the global scope with unnamespaced functions

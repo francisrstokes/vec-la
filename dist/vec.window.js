@@ -51,13 +51,43 @@ var vScale = function vScale(v, sc) {
 };
 
 /**
+ * Creates an 2x3 Matrix
+ * @param {Number} a
+ * @param {Number} b
+ * @param {Number} c
+ * @param {Number} d
+ * @param {Number} tx
+ * @param {Number} ty
+ * @returns {Matrix}
+ */
+var vCreateMatrix = function vCreateMatrix() {
+  var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+  var b = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var c = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var d = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+  var tx = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
+  var ty = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
+  return [a, b, tx, c, d, ty, 0, 0, 1];
+};
+
+/**
  * Applys a matrix transformation to a vector
  * @param {Vector} v
  * @param {Matrix} m
  * @returns {Vector}
  */
 var vTransform = function vTransform(v, m) {
-  return [v[0] * (m[0] + m[1]), v[1] * (m[2] + m[3])];
+  return [v[0] * m[0] + v[1] * m[3] + m[2], v[0] * m[1] + v[1] * m[4] + m[5]];
+};
+
+/**
+ * Compose two tranformations
+ * @param {Matrix} m
+ * @param {Matrix} m2
+ * @returns {Matrix}
+ */
+var vComposeTransform = function vComposeTransform(m, m2) {
+  return [m[0] * m2[0] + m[1] * m2[3] + m[2] * m2[6], m[0] * m2[1] + m[1] * m2[4] + m[2] * m2[7], m[0] * m2[2] + m[1] * m2[5] + m[2] * m2[8], m[3] * m2[0] + m[4] * m2[3] + m[5] * m2[6], m[3] * m2[1] + m[4] * m2[4] + m[5] * m2[7], m[3] * m2[2] + m[4] * m2[5] + m[5] * m2[8], m[6] * m2[0] + m[7] * m2[3] + m[8] * m2[6], m[6] * m2[1] + m[7] * m2[4] + m[8] * m2[7], m[6] * m2[2] + m[7] * m2[5] + m[8] * m2[8]];
 };
 
 /**
@@ -79,7 +109,7 @@ var vRotate = function vRotate(v, a) {
  */
 var vRotatePointAround = function vRotatePointAround(v, cp, a) {
   var v2 = vSub(v, cp);
-  return this.add(cp, [v2[0] * Math.cos(a) - v2[1] * Math.sin(a), v2[0] * Math.sin(a) + v2[1] * Math.cos(a)]);
+  return undefined.add(cp, [v2[0] * Math.cos(a) - v2[1] * Math.sin(a), v2[0] * Math.sin(a) + v2[1] * Math.cos(a)]);
 };
 
 /**
@@ -102,24 +132,15 @@ var vDot = function vDot(v, v2) {
   return v[0] * v2[0] + v[1] * v2[1];
 };
 
-/**
+/** 
  * Determinate of a matrix
  * @param {Matrix} m
  * @returns {Number}
  */
 var vDet = function vDet(m) {
-  return m[0] * m[3] - m[1] * m[2];
+  return m[0] * m[4] - m[1] * m[3];
 };
 
-/**
- * Compose two tranformations
- * @param {Matrix} m
- * @param {Matrix} m2
- * @returns {Matrix}
- */
-var vComposeTransform = function vComposeTransform(m, m2) {
-  return [m[0] * m2[0] + m[1] * m2[2], m[0] * m2[1] + m[1] * m2[3], m[2] * m2[0] + m[3] * m2[2], m[2] * m2[1] + m[3] * m2[3]];
-};
 /* start window exports */
 /**
  * Polutes the global scope with unnamespaced functions
