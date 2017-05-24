@@ -53,8 +53,8 @@ const vScale = (v, sc) => [v[0]*sc, v[1]*sc];
  * @returns {Matrix}
  */
 const vCreateMatrix = (a=1, b=0, c=0, d=1, tx=0, ty=0) =>[
-  a, b, tx, 
-  c, d, ty, 
+  a, c, tx, 
+  b, d, ty, 
   0, 0, 1
 ];
 
@@ -65,8 +65,8 @@ const vCreateMatrix = (a=1, b=0, c=0, d=1, tx=0, ty=0) =>[
  * @returns {Vector}
  */
 const vTransform = (v, m) => [
-  v[0]*m[0] + v[1]*m[3] + m[2],
-  v[0]*m[1] + v[1]*m[4] + m[5]
+  v[0]*m[0] + v[1]*m[1] + m[2],
+  v[0]*m[3] + v[1]*m[4] + m[5]
 ];
 
 /**
@@ -128,7 +128,7 @@ const vDot = (v, v2) => v[0]*v2[0] + v[1]*v2[1];
  * @param {Matrix} m
  * @returns {Number}
  */
-const vDet = (m) => m[0]*m[4] - m[1]*m[3];
+const vDet = (m) => m[0]*m[4] - m[3]*m[1];
 
 
 /* start window exports */
