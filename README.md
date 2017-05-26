@@ -76,8 +76,9 @@ const v1 = [10, 10];
 
 // Inversion matrix
 const m = [
-  0, -1,
-  -1, 0
+  -1, 0,  0
+   0, -1, 0,
+   0,  0, 1
 ];
 const v2 = vec.transform(v1, m); // [-10, -10]
 ```
@@ -86,8 +87,9 @@ const v2 = vec.transform(v1, m); // [-10, -10]
 
 ```
 const m = [
-  10, 0, 
-  0, 10
+  10, 0, 0,
+  0, 10, 0,
+  0,  0, 1
 ];
 const d = vec.det(m); // 100
 ```
@@ -97,12 +99,14 @@ const d = vec.det(m); // 100
 ```
 const v = [10, 10];
 const m = [
-  0, -1,
-  -1, 0
+  0, -1, 0,
+  -1, 0, 0,
+   0, 0, 1
 ];
 const m2 = [
-  Math.cos(Math.PI/2), -Math.sin(Math.PI/2),
-  Math.sin(Math.PI/2), Math.cos(Math.PI/2)
+  Math.cos(Math.PI/2), -Math.sin(Math.PI/2), 0,
+  Math.sin(Math.PI/2), Math.cos(Math.PI/2)   0,
+  0, 0, 1
 ];
 const m3 = vec.composeTransform(m2, m);
 
