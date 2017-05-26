@@ -67,7 +67,7 @@ var vCreateMatrix = function vCreateMatrix() {
   var d = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
   var tx = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
   var ty = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
-  return [a, b, tx, c, d, ty, 0, 0, 1];
+  return [a, c, tx, b, d, ty, 0, 0, 1];
 };
 
 /**
@@ -77,7 +77,7 @@ var vCreateMatrix = function vCreateMatrix() {
  * @returns {Vector}
  */
 var vTransform = function vTransform(v, m) {
-  return [v[0] * m[0] + v[1] * m[3] + m[2], v[0] * m[1] + v[1] * m[4] + m[5]];
+  return [v[0] * m[0] + v[1] * m[1] + m[2], v[0] * m[3] + v[1] * m[4] + m[5]];
 };
 
 /**
@@ -138,7 +138,7 @@ var vDot = function vDot(v, v2) {
  * @returns {Number}
  */
 var vDet = function vDet(m) {
-  return m[0] * m[4] - m[1] * m[3];
+  return m[0] * m[4] - m[3] * m[1];
 };
 
 /* start window exports */
