@@ -109,7 +109,7 @@ var vRotate = function vRotate(v, a) {
  */
 var vRotatePointAround = function vRotatePointAround(v, cp, a) {
   var v2 = vSub(v, cp);
-  return undefined.add(cp, [v2[0] * Math.cos(a) - v2[1] * Math.sin(a), v2[0] * Math.sin(a) + v2[1] * Math.cos(a)]);
+  return vAdd(cp, [v2[0] * Math.cos(a) - v2[1] * Math.sin(a), v2[0] * Math.sin(a) + v2[1] * Math.cos(a)]);
 };
 
 /**
@@ -170,6 +170,7 @@ window.vec = {
   mag: vMag,
   scale: vScale,
   transform: vTransform,
+  createMatrix: vCreateMatrix,
   composeTransform: vComposeTransform,
   rotate: vRotate,
   rotatePointAround: vRotatePointAround,

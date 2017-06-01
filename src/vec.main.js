@@ -101,7 +101,7 @@ const vRotate = (v, a) => [
  */
 const vRotatePointAround = (v, cp, a) => {
   const v2 = vSub(v, cp);
-  return this.add(cp, [
+  return vAdd(cp, [
     v2[0] * Math.cos(a) - v2[1] * Math.sin(a),
     v2[0] * Math.sin(a) + v2[1] * Math.cos(a)
   ]);
@@ -160,6 +160,7 @@ window.vec = {
   mag: vMag,
   scale: vScale,
   transform: vTransform,
+  createMatrix: vCreateMatrix,
   composeTransform: vComposeTransform,
   rotate: vRotate,
   rotatePointAround: vRotatePointAround,
@@ -179,6 +180,7 @@ window.vec = {
   export { vScale as scale };
   export { vTransform as transform };
   export { vComposeTransform as composeTransform };
+  export { vCreateMatrix as createMatrix };
   export { vRotate as rotate };
   export { vRotatePointAround as rotatePointAround };
   export { vMidpoint as midpoint };

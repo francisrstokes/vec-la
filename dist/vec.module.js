@@ -111,7 +111,7 @@ var vRotate = function vRotate(v, a) {
  */
 var vRotatePointAround = function vRotatePointAround(v, cp, a) {
   var v2 = vSub(v, cp);
-  return undefined.add(cp, [v2[0] * Math.cos(a) - v2[1] * Math.sin(a), v2[0] * Math.sin(a) + v2[1] * Math.cos(a)]);
+  return vAdd(cp, [v2[0] * Math.cos(a) - v2[1] * Math.sin(a), v2[0] * Math.sin(a) + v2[1] * Math.cos(a)]);
 };
 
 /**
@@ -151,6 +151,7 @@ exports.mag = vMag;
 exports.scale = vScale;
 exports.transform = vTransform;
 exports.composeTransform = vComposeTransform;
+exports.createMatrix = vCreateMatrix;
 exports.rotate = vRotate;
 exports.rotatePointAround = vRotatePointAround;
 exports.midpoint = vMidpoint;

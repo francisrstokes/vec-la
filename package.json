@@ -18,10 +18,12 @@
   "homepage": "https://github.com/francisrstokes/vec#readme",
   "devDependencies": {
     "babel-preset-es2015": "^6.24.1",
+    "chai": "^4.0.1",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-browserify": "^0.5.1",
     "gulp-rename": "^1.2.2",
-    "gulp-strip-code": "^0.1.4"
+    "gulp-strip-code": "^0.1.4",
+    "mocha": "^3.4.2"
   }
 }
