@@ -1,6 +1,8 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 "use strict";
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 /**
  * Adds two vectors
  * @param {Vector} v
@@ -141,6 +143,47 @@ var vDet = function vDet(m) {
   return m[0] * m[4] - m[3] * m[1];
 };
 
+/**
+ * Returns a builder object for easily composing matrices. Exposes
+ * useful helper functions for general matrix operations:
+ * translate, scale, rotate, shear
+ * as a generic add function that accepts a matrix.
+ * Calling done returns the matrix.
+ * @param {Matrix} m
+ */
+var vMatrixBuilder = function vMatrixBuilder() {
+  var m = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  return {
+    _m: m || [1, 0, 0, 0, 1, 0, 0, 0, 1],
+    add: function add(m) {
+      this._m = vComposeTransform(m, this._m);
+      return this;
+    },
+    translate: function translate(x, y) {
+      this._m = vComposeTransform([1, 0, x, 0, 1, y, 0, 0, 1], this._m);
+      return this;
+    },
+    rotate: function rotate(a) {
+      this._m = vComposeTransform([Math.cos(a), -Math.sin(a), 0, Math.sin(a), Math.cos(a), 0, 0, 0, 1], this._m);
+      return this;
+    },
+    scale: function scale(x, y) {
+      this._m = vComposeTransform([x, 0, 0, 0, y, 0, 0, 0, 1], this._m);
+      return this;
+    },
+    shear: function shear(x, y) {
+      this._m = vComposeTransform([1, x, 0, y, 1, 0, 0, 0, 1], this._m);
+      return this;
+    },
+    clone: function clone() {
+      return _extends({}, this);
+    },
+    done: function done() {
+      return this._m;
+    }
+  };
+};
+
 /* start window exports */
 /**
  * Polutes the global scope with unnamespaced functions
@@ -158,6 +201,7 @@ var polute = function polute() {
   window.vMidpoint = vMidpoint;
   window.vDot = vDot;
   window.vDet = vDet;
+  window.vMatrixBuilder = vMatrixBuilder;
 };
 
 /**
@@ -177,6 +221,7 @@ window.vec = {
   midpoint: vMidpoint,
   dot: vDot,
   det: vDet,
+  matrixBuilder: vMatrixBuilder,
 
   polute: polute
 };

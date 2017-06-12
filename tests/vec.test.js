@@ -124,3 +124,159 @@ describe('Vec-la', function() {
     expect(vec.dot(v1, v2)).to.equal(14);
   });
 });
+
+describe('Matrix Builder', function() {
+  it('should create the default initial matrix and return it on done()', () => {
+    const m = vec
+      .matrixBuilder()
+      .done();
+
+    expect(m).to.deep.equal([
+      1, 0, 0,
+      0, 1, 0,
+      0, 0, 1
+    ]);
+  });
+
+  it('should create a specified matrix and return it on done()', () => {
+    const m = vec
+      .matrixBuilder([
+        1, 2, 3,
+        4, 5, 6,
+        7, 8, 9
+      ])
+      .done();
+
+    expect(m).to.deep.equal([
+        1, 2, 3,
+        4, 5, 6,
+        7, 8, 9
+      ]);
+  });
+
+  it('should correctly add to the existing matrix', () => {
+    const m = vec
+      .matrixBuilder([
+        2, 0, 0,
+        0, 2, 0,
+        0, 0, 1
+      ])
+      .add([
+        2, 0, 0,
+        0, 1, 0,
+        0, 0, 1
+      ])
+      .done();
+
+    expect(m).to.deep.equal([
+        4, 0, 0,
+        0, 2, 0,
+        0, 0, 1
+      ]);
+  });
+
+  it('should correctly add a translate the existing matrix', () => {
+    const m = vec
+      .matrixBuilder([
+        2, 0, 0,
+        0, 2, 0,
+        0, 0, 1
+      ])
+      .translate(30, 40)
+      .done();
+
+    expect(m).to.deep.equal([
+        2, 0, 30,
+        0, 2, 40,
+        0, 0, 1
+      ]);
+  });
+
+  it('should correctly add a scale the existing matrix', () => {
+    const m = vec
+      .matrixBuilder([
+        2, 0, 0,
+        0, 3, 0,
+        0, 0, 1
+      ])
+      .scale(2.5, 3)
+      .done();
+
+    expect(m).to.deep.equal([
+        5, 0, 0,
+        0, 9, 0,
+        0, 0, 1
+      ]);
+  });
+
+  it('should correctly add a rotate the existing matrix', () => {
+    const m = vec
+      .matrixBuilder([
+        3, 0, 10,
+        0, 2, 20,
+        0, 0, 1
+      ])
+      .rotate(0.5)
+      .done();
+
+    const mFixedRounding = m.map(c => parseFloat(c.toFixed(2)));
+    expect(mFixedRounding).to.deep.equal([
+      2.63, -0.96, -0.81, 
+      1.44, 1.76, 22.35, 
+      0, 0, 1 
+    ]);
+  });
+
+  it('should correctly add a shear the existing matrix', () => {
+    const m = vec
+      .matrixBuilder([
+        3, 0, 10,
+        0, 2, 20,
+        0, 0, 1
+      ])
+      .shear(0.5, 0.2)
+      .done();
+
+    const mFixedRounding = m.map(c => parseFloat(c.toFixed(2)));
+    expect(mFixedRounding).to.deep.equal([
+      3, 1, 20, 
+      0.6, 2, 22, 
+      0, 0, 1 
+    ]);
+  });
+
+  it('should correctly compose multiple operation calls and return it on done()', () => {
+    const m = vec
+      .matrixBuilder()
+      .rotate(0.5)
+      .shear(0.1, 0.2)
+      .scale(2, 3)
+      .translate(30, 40)
+      .done();
+
+    const mFixedRounding = m.map(c => parseFloat(c.toFixed(2)));
+    expect(mFixedRounding).to.deep.equal([
+      1.85, -0.78, 30, 
+      1.96, 2.35, 40, 
+      0, 0, 1 
+    ]);
+  });
+
+  it('should allow cloning a builder without modifying the original', () => {
+    const mb = vec.matrixBuilder();
+    const m2 = mb.clone().translate(10, 10).done();
+    const m1 = mb.done();
+
+    expect(m1).to.deep.equal([
+      1, 0, 0,
+      0, 1, 0, 
+      0, 0, 1 
+    ]);
+
+    expect(m2).to.deep.equal([
+      1, 0, 10,
+      0, 1, 10, 
+      0, 0, 1 
+    ]);
+  });
+});

@@ -130,6 +130,63 @@ const vDot = (v, v2) => v[0]*v2[0] + v[1]*v2[1];
  */
 const vDet = (m) => m[0]*m[4] - m[3]*m[1];
 
+/**
+ * Returns a builder object for easily composing matrices. Exposes
+ * useful helper functions for general matrix operations:
+ * translate, scale, rotate, shear
+ * as a generic add function that accepts a matrix.
+ * Calling done returns the matrix.
+ * @param {Matrix} m
+ */
+const vMatrixBuilder = (m = null) => ({
+  _m: m || [
+    1, 0, 0,
+    0, 1, 0,
+    0, 0, 1
+  ],
+  add: function (m) {
+    this._m = vComposeTransform(m, this._m);
+    return this;
+  },
+  translate: function (x, y) {
+    this._m = vComposeTransform([
+      1, 0, x,
+      0, 1, y,
+      0, 0, 1
+    ], this._m);
+    return this;
+  },
+  rotate: function (a) {
+    this._m = vComposeTransform([
+      Math.cos(a), -Math.sin(a), 0,
+      Math.sin(a), Math.cos(a), 0,
+      0, 0, 1
+    ], this._m);
+    return this;
+  },
+  scale: function (x, y) {
+    this._m = vComposeTransform([
+      x, 0, 0,
+      0, y, 0,
+      0, 0, 1
+    ], this._m);
+    return this;
+  },
+  shear: function (x, y) {
+    this._m = vComposeTransform([
+      1, x, 0,
+      y, 1, 0,
+      0, 0, 1
+    ], this._m);
+    return this;
+  },
+  clone: function () {
+    return { ...this };
+  },
+  done: function () { 
+    return this._m;
+  }
+});
 
 /* start window exports */
 /**
@@ -148,6 +205,7 @@ const polute = function () {
   window.vMidpoint = vMidpoint;
   window.vDot = vDot;
   window.vDet = vDet;
+  window.vMatrixBuilder = vMatrixBuilder;
 }
 
 /**
@@ -167,6 +225,7 @@ window.vec = {
   midpoint: vMidpoint,
   dot: vDot,
   det: vDet,
+  matrixBuilder: vMatrixBuilder,
 
   polute: polute
 };
@@ -180,6 +239,7 @@ window.vec = {
   export { vScale as scale };
   export { vTransform as transform };
   export { vComposeTransform as composeTransform };
+  export { vMatrixBuilder as matrixBuilder };
   export { vCreateMatrix as createMatrix };
   export { vRotate as rotate };
   export { vRotatePointAround as rotatePointAround };
