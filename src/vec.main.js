@@ -183,8 +183,8 @@ const vMatrixBuilder = (m = null) => ({
   clone: function () {
     return { ...this };
   },
-  done: function () { 
-    return this._m;
+  get: function () { 
+    return [...this._m];
   }
 });
 

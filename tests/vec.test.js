@@ -126,10 +126,10 @@ describe('Vec-la', function() {
 });
 
 describe('Matrix Builder', function() {
-  it('should create the default initial matrix and return it on done()', () => {
+  it('should create the default initial matrix and return it on get()', () => {
     const m = vec
       .matrixBuilder()
-      .done();
+      .get();
 
     expect(m).to.deep.equal([
       1, 0, 0,
@@ -138,14 +138,14 @@ describe('Matrix Builder', function() {
     ]);
   });
 
-  it('should create a specified matrix and return it on done()', () => {
+  it('should create a specified matrix and return it on get()', () => {
     const m = vec
       .matrixBuilder([
         1, 2, 3,
         4, 5, 6,
         7, 8, 9
       ])
-      .done();
+      .get();
 
     expect(m).to.deep.equal([
         1, 2, 3,
@@ -166,7 +166,7 @@ describe('Matrix Builder', function() {
         0, 1, 0,
         0, 0, 1
       ])
-      .done();
+      .get();
 
     expect(m).to.deep.equal([
         4, 0, 0,
@@ -183,7 +183,7 @@ describe('Matrix Builder', function() {
         0, 0, 1
       ])
       .translate(30, 40)
-      .done();
+      .get();
 
     expect(m).to.deep.equal([
         2, 0, 30,
@@ -200,7 +200,7 @@ describe('Matrix Builder', function() {
         0, 0, 1
       ])
       .scale(2.5, 3)
-      .done();
+      .get();
 
     expect(m).to.deep.equal([
         5, 0, 0,
@@ -217,7 +217,7 @@ describe('Matrix Builder', function() {
         0, 0, 1
       ])
       .rotate(0.5)
-      .done();
+      .get();
 
     const mFixedRounding = m.map(c => parseFloat(c.toFixed(2)));
     expect(mFixedRounding).to.deep.equal([
@@ -235,7 +235,7 @@ describe('Matrix Builder', function() {
         0, 0, 1
       ])
       .shear(0.5, 0.2)
-      .done();
+      .get();
 
     const mFixedRounding = m.map(c => parseFloat(c.toFixed(2)));
     expect(mFixedRounding).to.deep.equal([
@@ -245,14 +245,14 @@ describe('Matrix Builder', function() {
     ]);
   });
 
-  it('should correctly compose multiple operation calls and return it on done()', () => {
+  it('should correctly compose multiple operation calls and return it on get()', () => {
     const m = vec
       .matrixBuilder()
       .rotate(0.5)
       .shear(0.1, 0.2)
       .scale(2, 3)
       .translate(30, 40)
-      .done();
+      .get();
 
     const mFixedRounding = m.map(c => parseFloat(c.toFixed(2)));
     expect(mFixedRounding).to.deep.equal([
@@ -264,8 +264,8 @@ describe('Matrix Builder', function() {
 
   it('should allow cloning a builder without modifying the original', () => {
     const mb = vec.matrixBuilder();
-    const m2 = mb.clone().translate(10, 10).done();
-    const m1 = mb.done();
+    const m2 = mb.clone().translate(10, 10).get();
+    const m1 = mb.get();
 
     expect(m1).to.deep.equal([
       1, 0, 0,
