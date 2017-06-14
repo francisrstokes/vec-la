@@ -40,7 +40,7 @@ Finally, when using the window version you can call `vec.polute()` to insert the
 
 ## Matrix Builder
 
-`vec.matrixBuilder(m)` creates a builder object that can be used to easily chain together transformations. After composing transformations, just call `done()` on the builder and the final matrix is returned.
+`vec.matrixBuilder(m)` creates a builder object that can be used to easily chain together transformations. Call `get()` on the builder at any time to get a copy of the matrix at that point.
 
 ```javascript 
 const mb = vec.matrixBuilder(); // Defaults to identity matrix
@@ -49,7 +49,7 @@ const finalMatrix = mb
   .scale(2, 3)
   .shear(0.2, 0)
   .translate(20, 40)
-  .done();
+  .get();
 
 // [ 
 //  2.0320508075688775, -0.48038475772933664, 20,
@@ -66,7 +66,7 @@ The function also accepts a matrix as it's argument.
 - `translate(x, y)` : Concatenate a translation matrix
 - `add(m)` : Concatenate an arbitrary matrix
 - `clone()` : Create a new copy of this builder
-- `done()` : Return the resulting matrix
+- `get()` : Return the resulting matrix
 
 ## Examples
 
