@@ -30,6 +30,7 @@ and import or require as needed. If you need to use a standalone windowed versio
 - `vec.createMatrix(a, b, c, d, tx, ty)` : Helper function for matrix creation. Defaults to an identity matrix
 - `vec.transform(v, m)` : Result of applying matrix tranformation `m` to `v`
 - `vec.composeTransform(m, m2)` : Result of composing transformation matrix `m` with `m2`
+- `vec.matrixBuilder(m)` : Creates a matrix builder (see below)
 - `vec.dot(v, v2)` : Dot product of `v` and `v2`
 - `vec.det(v)` : Determinant of `v`
 
@@ -37,13 +38,43 @@ Finally, when using the window version you can call `vec.polute()` to insert the
 
 `vFunctionName` e.g `vAdd`, `vMidpoint`, `vDot` etc.
 
+## Matrix Builder
+
+`vec.matrixBuilder(m)` creates a builder object that can be used to easily chain together transformations. After composing transformations, just call `done()` on the builder and the final matrix is returned.
+
+```javascript 
+const mb = vec.matrixBuilder(); // Defaults to identity matrix
+const finalMatrix = mb
+  .rotate(Math.PI/6)
+  .scale(2, 3)
+  .shear(0.2, 0)
+  .translate(20, 40)
+  .done();
+
+// [ 
+//  2.0320508075688775, -0.48038475772933664, 20,
+//  1.4999999999999998, 2.598076211353316, 40,
+//  0, 0, 1
+// ]
+```
+
+The function also accepts a matrix as it's argument. 
+
+- `rotate(a)` : Concatenate a rotation matrix of `a` radians
+- `scale(x, y)` : Concatenate a scaling matrix
+- `shear(x, y)` : Concatenate a shearing matrix
+- `translate(x, y)` : Concatenate a translation matrix
+- `add(m)` : Concatenate an arbitrary matrix
+- `clone()` : Create a new copy of this builder
+- `done()` : Return the resulting matrix
+
 ## Examples
 
 (all examples assume vec is imported under `vec`)
 
 ### Addition
 
-```
+```javascript 
 const v1 = [0, 1];
 const v2 = [1, 0];
 const v3 = vec.add(v1, v2); // [1, 1]
@@ -51,7 +82,7 @@ const v3 = vec.add(v1, v2); // [1, 1]
 
 ### Scaling
 
-```
+```javascript 
 const v1 = [0, 1];
 const scaler = 10;
 const v2 = vec.scale(v1, scaler); // [0, 10]
@@ -59,14 +90,14 @@ const v2 = vec.scale(v1, scaler); // [0, 10]
 
 ### Normalising
 
-```
+```javascript 
 const v1 = [6.32, -23.1];
 const v2 = vec.norm(v1); // [0.2638946146581466, -0.9645515187663272]
 ```
 
 ### Magnitude
 
-```
+```javascript 
 const v1 = [6.32, -23.1];
 const mag = vec.mag(v1); // 23.948954048141644
 ```
@@ -74,7 +105,7 @@ const mag = vec.mag(v1); // 23.948954048141644
 
 ### Matrix Transform
 
-```
+```javascript 
 const v1 = [10, 10];
 
 // Inversion matrix
@@ -88,7 +119,7 @@ const v2 = vec.transform(v1, m); // [-10, -10]
 
 ### Computing determinants
 
-```
+```javascript 
 const m = [
   10, 0, 0,
   0, 10, 0,
@@ -99,7 +130,7 @@ const d = vec.det(m); // 100
 
 ### Composing Matrices
 
-```
+```javascript 
 const v = [10, 10];
 const m = [
   0, -1, 0,
