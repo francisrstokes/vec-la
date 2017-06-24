@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 /**
@@ -153,38 +151,31 @@ var vDet = function vDet(m) {
  * useful helper functions for general matrix operations:
  * translate, scale, rotate, shear
  * as a generic add function that accepts a matrix.
- * Calling done returns the matrix.
+ * Calling get returns the matrix.
  * @param {Matrix} m
  */
 var vMatrixBuilder = function vMatrixBuilder() {
   var m = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+  var _m = m || vCreateMatrix();
   return {
-    _m: m || [1, 0, 0, 0, 1, 0, 0, 0, 1],
     add: function add(m) {
-      this._m = vComposeTransform(m, this._m);
-      return this;
+      return vMatrixBuilder(vComposeTransform(m, _m));
     },
     translate: function translate(x, y) {
-      this._m = vComposeTransform([1, 0, x, 0, 1, y, 0, 0, 1], this._m);
-      return this;
+      return vMatrixBuilder(vComposeTransform([1, 0, x, 0, 1, y, 0, 0, 1], _m));
     },
     rotate: function rotate(a) {
-      this._m = vComposeTransform([Math.cos(a), -Math.sin(a), 0, Math.sin(a), Math.cos(a), 0, 0, 0, 1], this._m);
-      return this;
+      return vMatrixBuilder(vComposeTransform([Math.cos(a), -Math.sin(a), 0, Math.sin(a), Math.cos(a), 0, 0, 0, 1], _m));
     },
     scale: function scale(x, y) {
-      this._m = vComposeTransform([x, 0, 0, 0, y, 0, 0, 0, 1], this._m);
-      return this;
+      return vMatrixBuilder(vComposeTransform([x, 0, 0, 0, y, 0, 0, 0, 1], _m));
     },
     shear: function shear(x, y) {
-      this._m = vComposeTransform([1, x, 0, y, 1, 0, 0, 0, 1], this._m);
-      return this;
-    },
-    clone: function clone() {
-      return _extends({}, this);
+      return vMatrixBuilder(vComposeTransform([1, x, 0, y, 1, 0, 0, 0, 1], _m));
     },
     get: function get() {
-      return [].concat(_toConsumableArray(this._m));
+      return [].concat(_toConsumableArray(_m));
     }
   };
 };

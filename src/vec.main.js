@@ -135,58 +135,40 @@ const vDet = (m) => m[0]*m[4] - m[3]*m[1];
  * useful helper functions for general matrix operations:
  * translate, scale, rotate, shear
  * as a generic add function that accepts a matrix.
- * Calling done returns the matrix.
+ * Calling get returns the matrix.
  * @param {Matrix} m
  */
-const vMatrixBuilder = (m = null) => ({
-  _m: m || [
-    1, 0, 0,
-    0, 1, 0,
-    0, 0, 1
-  ],
-  add: function (m) {
-    this._m = vComposeTransform(m, this._m);
-    return this;
-  },
-  translate: function (x, y) {
-    this._m = vComposeTransform([
-      1, 0, x,
-      0, 1, y,
-      0, 0, 1
-    ], this._m);
-    return this;
-  },
-  rotate: function (a) {
-    this._m = vComposeTransform([
-      Math.cos(a), -Math.sin(a), 0,
-      Math.sin(a), Math.cos(a), 0,
-      0, 0, 1
-    ], this._m);
-    return this;
-  },
-  scale: function (x, y) {
-    this._m = vComposeTransform([
-      x, 0, 0,
-      0, y, 0,
-      0, 0, 1
-    ], this._m);
-    return this;
-  },
-  shear: function (x, y) {
-    this._m = vComposeTransform([
-      1, x, 0,
-      y, 1, 0,
-      0, 0, 1
-    ], this._m);
-    return this;
-  },
-  clone: function () {
-    return { ...this };
-  },
-  get: function () { 
-    return [...this._m];
-  }
-});
+const vMatrixBuilder = (m = null) => {
+  const _m = m || vCreateMatrix();
+  return {
+    add: (m) => vMatrixBuilder(vComposeTransform(m, _m)),
+    translate: (x, y) => 
+      vMatrixBuilder(vComposeTransform([
+        1, 0, x,
+        0, 1, y,
+        0, 0, 1
+      ], _m)),
+    rotate: (a) => 
+      vMatrixBuilder(vComposeTransform([
+        Math.cos(a), -Math.sin(a), 0,
+        Math.sin(a), Math.cos(a), 0,
+        0, 0, 1
+      ], _m)),
+    scale: (x, y) => 
+      vMatrixBuilder(vComposeTransform([
+        x, 0, 0,
+        0, y, 0,
+        0, 0, 1
+      ], _m)),
+    shear: (x, y) => 
+      vMatrixBuilder(vComposeTransform([
+        1, x, 0,
+        y, 1, 0,
+        0, 0, 1
+      ], _m)),
+    get: () => [..._m]
+  };
+};
 
 /* start window exports */
 /**

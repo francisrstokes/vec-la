@@ -264,7 +264,7 @@ describe('Matrix Builder', function() {
 
   it('should allow cloning a builder without modifying the original', () => {
     const mb = vec.matrixBuilder();
-    const m2 = mb.clone().translate(10, 10).get();
+    const m2 = mb.translate(10, 10).get();
     const m1 = mb.get();
 
     expect(m1).to.deep.equal([
