@@ -36,6 +36,29 @@ var vMag = function vMag(v) {
 };
 
 /**
+ * Gets the normal of a vector
+ * @param {Vector} v
+ * @returns {Vector}
+ */
+var vNormal = function vNormal(v) {
+  return [-v[1], v[0]];
+};
+
+/**
+ * Gets a point along the direction formed from v2 - v1.
+ * t represents a normalised percentage [0, 1] such that vTowards(v1, v2, 0) === v1 and vTowards(v1, v2, 1) === v2
+ * @param {Vector} v1
+ * @param {Vector} v2
+ * @param {Number} t
+ * @returns {Vector}
+ */
+var vTowards = function vTowards(v1, v2, t) {
+  var d = vSub(v2, v1);
+  var m = vMag(d);
+  return vAdd(v1, vScale(vNorm(d), t * m));
+};
+
+/**
  * Gets a normalised vector 
  * @param {Vector} v
  * @returns {Vector}
@@ -186,6 +209,8 @@ exports.sub = vSub;
 exports.norm = vNorm;
 exports.mag = vMag;
 exports.scale = vScale;
+exports.normal = vNormal;
+exports.towards = vTowards;
 exports.transform = vTransform;
 exports.composeTransform = vComposeTransform;
 exports.matrixBuilder = vMatrixBuilder;

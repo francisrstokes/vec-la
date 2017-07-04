@@ -22,6 +22,27 @@ const vSub = (v, v2) => [v[0]-v2[0], v[1]-v2[1]];
 const vMag = (v) => Math.sqrt(v[0]*v[0]+v[1]*v[1]);
 
 /**
+ * Gets the normal of a vector
+ * @param {Vector} v
+ * @returns {Vector}
+ */
+const vNormal = (v) => [-v[1], v[0]];
+
+/**
+ * Gets a point along the direction formed from v2 - v1.
+ * t represents a normalised percentage [0, 1] such that vTowards(v1, v2, 0) === v1 and vTowards(v1, v2, 1) === v2
+ * @param {Vector} v1
+ * @param {Vector} v2
+ * @param {Number} t
+ * @returns {Vector}
+ */
+const vTowards = (v1, v2, t) => {
+  const d = vSub(v2, v1);
+  const m = vMag(d);
+  return vAdd(v1, vScale(vNorm(d), t*m));
+};
+
+/**
  * Gets a normalised vector 
  * @param {Vector} v
  * @returns {Vector}
@@ -202,6 +223,8 @@ window.vec = {
   transform: vTransform,
   createMatrix: vCreateMatrix,
   composeTransform: vComposeTransform,
+  normal: vNormal,
+  towards: vTowards,
   rotate: vRotate,
   rotatePointAround: vRotatePointAround,
   midpoint: vMidpoint,
@@ -219,6 +242,8 @@ window.vec = {
   export { vNorm as norm };
   export { vMag as mag };
   export { vScale as scale };
+  export { vNormal as normal };
+  export { vTowards as towards };
   export { vTransform as transform };
   export { vComposeTransform as composeTransform };
   export { vMatrixBuilder as matrixBuilder };
