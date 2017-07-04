@@ -31,13 +31,17 @@ describe('Vec-la', function() {
     expect(vec.scale(v1, sc)).to.deep.equal([30, 40]);
   });
 
-  it('should create a matrix correctly', () => {
-    const m = vec.createMatrix(1, 0, 0, 1, 0, 0);
-    expect(m).to.deep.equal([
-      1, 0, 0,
-      0, 1, 0,
-      0, 0, 1
-    ]);
+  it('should get the normal of a vector', () => {
+    const v1 = [0, 1];
+    expect(vec.normal(v1)).to.deep.equal([-1, 0]);
+  });
+
+  it('should get bet points along a direction vector', () => {
+    const v1 = [10, 8];
+    const v2 = [12, 20];
+    const res1 = vec.towards(v1, v2, 0.25);
+
+    expect(res1).to.deep.equal([10.5, 11]);
   });
 
   it('should apply a matrix transformation to a vector', () => {

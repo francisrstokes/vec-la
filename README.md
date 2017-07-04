@@ -14,8 +14,9 @@ and import or require as needed. If you need to use a standalone windowed versio
 
 ## Features
 
-- Immutable functions
+- Immutable functions for manipulating vectors
 - Vectors and matrices represented as pure, single dimensional arrays
+- Immutable Matrix builder helper object for sequentially composing matrices
 
 ## API
 
@@ -25,14 +26,17 @@ and import or require as needed. If you need to use a standalone windowed versio
 - `vec.midpoint(v, v2)` : Midpoint between `v` and `v2`
 - `vec.norm(v)` : Result of normalising `v`
 - `vec.mag(v)` : Magnitude of `v`
+- `vec.normal(v)`: Normal vector of `v`
+- `vec.towards(v, v2, t)`: A point in the interval [v, v2] along the direction formed from `v2 - v1`. `t` is a normalalised percentage [0, 1] of where in the interval the point falls.
 - `vec.rotate(v, a)` : Result of rotating `v` around the origin by `a` radians
 - `vec.rotatePointAround(v, cp, a)` : Result of rotating `v` around `cp` by `a` radians
+- `vec.dot(v, v2)` : Dot product of `v` and `v2`
+- `vec.det(v)` : Determinant of `v`
+- `vec.matrixBuilder(m)` : Creates a matrix builder (see below)
 - `vec.createMatrix(a, b, c, d, tx, ty)` : Helper function for matrix creation. Defaults to an identity matrix
 - `vec.transform(v, m)` : Result of applying matrix tranformation `m` to `v`
 - `vec.composeTransform(m, m2)` : Result of composing transformation matrix `m` with `m2`
-- `vec.matrixBuilder(m)` : Creates a matrix builder (see below)
-- `vec.dot(v, v2)` : Dot product of `v` and `v2`
-- `vec.det(v)` : Determinant of `v`
+
 
 Finally, when using the window version you can call `vec.polute()` to insert these functions into the global scope with the naming convention:
 
@@ -65,8 +69,11 @@ The function also accepts a matrix as it's argument.
 - `shear(x, y)` : Concatenate a shearing matrix
 - `translate(x, y)` : Concatenate a translation matrix
 - `add(m)` : Concatenate an arbitrary matrix
-- `clone()` : Create a new copy of this builder
 - `get()` : Return the resulting matrix
+
+## Tests
+
+Clone the repository, and then run `npm install && npm test`.
 
 ## Examples
 
@@ -150,7 +157,7 @@ const v3 = vec.transform(vec.transform(v1, m), m2);
 
 ## Motivation
 
- Many linear algebra libraries represent their vectors as object like `{ x, y }`, which can be cumbersome to work with. Arrays are easier to map, reduce, combine and generally work with symbolically. Additionally, Vec is designed to be used with ES6 and thus the `...` rest syntax, and so can easily and cleanly be supplied to functions expecting `x` and `y` parameters as sequential arguments.
+ Many linear algebra libraries represent their vectors as object like `{ x, y, mutableMethod, ... }`, which can be cumbersome to work with. Arrays are easier to map, reduce, combine and generally work with symbolically. Additionally, Vec is designed to be used with ES6 and thus the `...` rest syntax, and so can easily and cleanly be supplied to functions expecting `x` and `y` parameters as sequential arguments.
  
  For example: 
  
