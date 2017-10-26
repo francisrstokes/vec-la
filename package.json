@@ -1,6 +1,6 @@
 {
   "name": "vec-la",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "A tiny 2d linear algebra library",
   "main": "dist/vec.module.js",
   "scripts": {
