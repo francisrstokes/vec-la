@@ -109,6 +109,18 @@ var vTransform = function vTransform(v, m) {
 };
 
 /**
+ * Functional: Curried vTransform
+ * @param {Vector} v
+ * @param {Matrix} m
+ * @returns {Vector}
+ */
+var vfTransform = function vfTransform(m) {
+  return function (v) {
+    return vTransform(v, m);
+  };
+};
+
+/**
  * Compose two tranformations
  * @param {Matrix} m
  * @param {Matrix} m2
@@ -211,6 +223,7 @@ exports.mag = vMag;
 exports.scale = vScale;
 exports.normal = vNormal;
 exports.towards = vTowards;
+exports.fTransform = vfTransform;
 exports.transform = vTransform;
 exports.composeTransform = vComposeTransform;
 exports.matrixBuilder = vMatrixBuilder;

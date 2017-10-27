@@ -106,6 +106,18 @@ var vTransform = function vTransform(v, m) {
 };
 
 /**
+ * Functional: Curried vTransform
+ * @param {Vector} v
+ * @param {Matrix} m
+ * @returns {Vector}
+ */
+var vfTransform = function vfTransform(m) {
+  return function (v) {
+    return vTransform(v, m);
+  };
+};
+
+/**
  * Compose two tranformations
  * @param {Matrix} m
  * @param {Matrix} m2
@@ -211,6 +223,7 @@ var polute = function polute() {
   window.vScale = vScale;
   window.vMag = vMag;
   window.vTransform = vTransform;
+  window.vfTransform = vfTransform;
   window.vTowards = vTowards;
   window.vNormal = vNormal;
   window.vComposeTransform = vComposeTransform;
@@ -231,6 +244,7 @@ window.vec = {
   norm: vNorm,
   mag: vMag,
   scale: vScale,
+  fTransform: vfTransform,
   transform: vTransform,
   createMatrix: vCreateMatrix,
   composeTransform: vComposeTransform,

@@ -91,6 +91,14 @@ const vTransform = (v, m) => [
 ];
 
 /**
+ * Functional: Curried vTransform
+ * @param {Vector} v
+ * @param {Matrix} m
+ * @returns {Vector}
+ */
+const vfTransform = (m) => (v) => vTransform(v, m);
+
+/**
  * Compose two tranformations
  * @param {Matrix} m
  * @param {Matrix} m2
@@ -202,6 +210,7 @@ const polute = function () {
   window.vScale = vScale;
   window.vMag = vMag;
   window.vTransform = vTransform;
+  window.vfTransform = vfTransform;
   window.vTowards = vTowards;
   window.vNormal = vNormal;
   window.vComposeTransform = vComposeTransform;
@@ -222,6 +231,7 @@ window.vec = {
   norm: vNorm,
   mag: vMag,
   scale: vScale,
+  fTransform: vfTransform,
   transform: vTransform,
   createMatrix: vCreateMatrix,
   composeTransform: vComposeTransform,
@@ -246,6 +256,7 @@ window.vec = {
   export { vScale as scale };
   export { vNormal as normal };
   export { vTowards as towards };
+  export { vfTransform as fTransform };
   export { vTransform as transform };
   export { vComposeTransform as composeTransform };
   export { vMatrixBuilder as matrixBuilder };
