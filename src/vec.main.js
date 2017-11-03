@@ -43,7 +43,7 @@ const vTowards = (v1, v2, t) => {
 };
 
 /**
- * Gets a normalised vector 
+ * Gets a normalised vector
  * @param {Vector} v
  * @returns {Vector}
  */
@@ -74,8 +74,8 @@ const vScale = (v, sc) => [v[0]*sc, v[1]*sc];
  * @returns {Matrix}
  */
 const vCreateMatrix = (a=1, b=0, c=0, d=1, tx=0, ty=0) =>[
-  a, c, tx, 
-  b, d, ty, 
+  a, c, tx,
+  b, d, ty,
   0, 0, 1
 ];
 
@@ -145,6 +145,16 @@ const vRotatePointAround = (v, cp, a) => {
 const vMidpoint = (v, v2) => vScale(vAdd(v, v2), 0.5);
 
 /**
+ * Gets the distance between two vectors
+ * @param {Vector} v
+ * @param {Vector} v2
+ * @returns {Number}
+ */
+const vDist = (v, v2) => Math.sqrt(
+  Math.pow(v2[0] - v[0], 2) + Math.pow(v2[1] - v[1], 2)
+);
+
+/**
  * Dot product of two vectors
  * @param {Vector} v
  * @param {Vector} v2
@@ -152,7 +162,7 @@ const vMidpoint = (v, v2) => vScale(vAdd(v, v2), 0.5);
  */
 const vDot = (v, v2) => v[0]*v2[0] + v[1]*v2[1];
 
-/** 
+/**
  * Determinate of a matrix
  * @param {Matrix} m
  * @returns {Number}
@@ -171,25 +181,25 @@ const vMatrixBuilder = (m = null) => {
   const _m = m || vCreateMatrix();
   return {
     add: (m) => vMatrixBuilder(vComposeTransform(m, _m)),
-    translate: (x, y) => 
+    translate: (x, y) =>
       vMatrixBuilder(vComposeTransform([
         1, 0, x,
         0, 1, y,
         0, 0, 1
       ], _m)),
-    rotate: (a) => 
+    rotate: (a) =>
       vMatrixBuilder(vComposeTransform([
         Math.cos(a), -Math.sin(a), 0,
         Math.sin(a), Math.cos(a), 0,
         0, 0, 1
       ], _m)),
-    scale: (x, y) => 
+    scale: (x, y) =>
       vMatrixBuilder(vComposeTransform([
         x, 0, 0,
         0, y, 0,
         0, 0, 1
       ], _m)),
-    shear: (x, y) => 
+    shear: (x, y) =>
       vMatrixBuilder(vComposeTransform([
         1, x, 0,
         y, 1, 0,
@@ -219,6 +229,7 @@ const polute = function () {
   window.vMidpoint = vMidpoint;
   window.vDot = vDot;
   window.vDet = vDet;
+  window.vDist = vDist;
   window.vMatrixBuilder = vMatrixBuilder;
 }
 
@@ -242,6 +253,7 @@ window.vec = {
   midpoint: vMidpoint,
   dot: vDot,
   det: vDet,
+  dist: vDist,
   matrixBuilder: vMatrixBuilder,
 
   polute: polute
@@ -266,4 +278,5 @@ window.vec = {
   export { vMidpoint as midpoint };
   export { vDot as dot };
   export { vDet as det };
+  export { vDist as dist };
 /* end exports */

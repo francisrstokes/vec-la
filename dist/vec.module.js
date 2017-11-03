@@ -59,7 +59,7 @@ var vTowards = function vTowards(v1, v2, t) {
 };
 
 /**
- * Gets a normalised vector 
+ * Gets a normalised vector
  * @param {Vector} v
  * @returns {Vector}
  */
@@ -163,6 +163,16 @@ var vMidpoint = function vMidpoint(v, v2) {
 };
 
 /**
+ * Gets the distance between two vectors
+ * @param {Vector} v
+ * @param {Vector} v2
+ * @returns {Number}
+ */
+var vDist = function vDist(v, v2) {
+  return Math.sqrt(Math.pow(v2[0] - v[0], 2) + Math.pow(v2[1] - v[1], 2));
+};
+
+/**
  * Dot product of two vectors
  * @param {Vector} v
  * @param {Vector} v2
@@ -172,7 +182,7 @@ var vDot = function vDot(v, v2) {
   return v[0] * v2[0] + v[1] * v2[1];
 };
 
-/** 
+/**
  * Determinate of a matrix
  * @param {Matrix} m
  * @returns {Number}
@@ -233,4 +243,5 @@ exports.rotatePointAround = vRotatePointAround;
 exports.midpoint = vMidpoint;
 exports.dot = vDot;
 exports.det = vDet;
+exports.dist = vDist;
 /* end exports */

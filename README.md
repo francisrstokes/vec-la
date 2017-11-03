@@ -32,6 +32,7 @@ and import or require as needed. If you need to use a standalone windowed versio
 - `vec.rotatePointAround(v, cp, a)` : Result of rotating `v` around `cp` by `a` radians
 - `vec.dot(v, v2)` : Dot product of `v` and `v2`
 - `vec.det(v)` : Determinant of `v`
+- `vec.dist(v, v2)` : Euclidean distance between `v` and `v2`
 - `vec.matrixBuilder(m)` : Creates a matrix builder (see below)
 - `vec.createMatrix(a, b, c, d, tx, ty)` : Helper function for matrix creation. Defaults to an identity matrix
 - `vec.transform(v, m)` : Result of applying matrix tranformation `m` to `v`
