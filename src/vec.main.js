@@ -145,6 +145,18 @@ const vRotatePointAround = (v, cp, a) => {
 const vMidpoint = (v, v2) => vScale(vAdd(v, v2), 0.5);
 
 /**
+ * Gets the vector r units along the angle a from vector v
+ * @param {Vector} v
+ * @param {Number} a
+ * @param {Number} r
+ * @returns {Vector}
+ */
+const vAlongAngle = (v, a, r) => [
+  v[0] + Math.cos(a) * r,
+  v[1] + Math.sin(a) * r
+];
+
+/**
  * Gets the distance between two vectors
  * @param {Vector} v
  * @param {Vector} v2
@@ -218,6 +230,7 @@ const polute = function () {
   window.vSub = vSub;
   window.vNorm = vNorm;
   window.vScale = vScale;
+  window.vAlongAngle = vAlongAngle;
   window.vMag = vMag;
   window.vTransform = vTransform;
   window.vfTransform = vfTransform;
@@ -238,6 +251,7 @@ const polute = function () {
  */
 window.vec = {
   add: vAdd,
+  alongAngle: vAlongAngle,
   sub: vSub,
   norm: vNorm,
   mag: vMag,
@@ -262,6 +276,7 @@ window.vec = {
 
 /* start exports */
   export { vAdd as add };
+  export { vAlongAngle as alongAngle };
   export { vSub as sub };
   export { vNorm as norm };
   export { vMag as mag };

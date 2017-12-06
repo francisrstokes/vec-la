@@ -160,6 +160,17 @@ var vMidpoint = function vMidpoint(v, v2) {
 };
 
 /**
+ * Gets the vector r units along the angle a from vector v
+ * @param {Vector} v
+ * @param {Number} a
+ * @param {Number} r
+ * @returns {Vector}
+ */
+var vAlongAngle = function vAlongAngle(v, a, r) {
+  return [v[0] + Math.cos(a) * r, v[1] + Math.sin(a) * r];
+};
+
+/**
  * Gets the distance between two vectors
  * @param {Vector} v
  * @param {Vector} v2
@@ -231,6 +242,7 @@ var polute = function polute() {
   window.vSub = vSub;
   window.vNorm = vNorm;
   window.vScale = vScale;
+  window.vAlongAngle = vAlongAngle;
   window.vMag = vMag;
   window.vTransform = vTransform;
   window.vfTransform = vfTransform;
@@ -251,6 +263,7 @@ var polute = function polute() {
  */
 window.vec = {
   add: vAdd,
+  alongAngle: vAlongAngle,
   sub: vSub,
   norm: vNorm,
   mag: vMag,
